@@ -1,0 +1,32 @@
+<html>
+	<head>
+		<style>
+			body, html{
+				margin:0;
+			}
+		</style>
+	</head>
+	<body>
+		<img id = "dev-map" src = "dev2.png">
+	</body>
+	<script>
+		//This script is used to get the coordinates of the nodes as made in the dev.png image
+		
+		var devMap = document.getElementById("dev-map");
+
+		var nodes = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W'];
+
+		var code = "";
+		var counter = 0;
+		devMap.addEventListener("click", function(e){
+			//if(!e) e.preventDefault();
+
+			var xCoord = e.x;
+			var yCoord = e.y;
+			
+			code += "add('"+nodes[counter]+"',["+xCoord+","+yCoord+"]);";
+			counter++;
+			console.log(code);
+		});
+	</script>
+</html>

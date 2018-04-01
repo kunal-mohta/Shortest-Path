@@ -1,0 +1,78 @@
+<html>
+	<head>
+		<style>
+			body, html{
+				margin:0;
+			}
+
+			#final{
+				float:right;
+			}
+		</style>
+	</head>
+	<body>
+		<img id = "dev-map" src = "dev2.png"><br>
+		<div id = "final"></div>
+	</body>
+	<script>
+		//This script is used to get the links between nodes as made in the dev.png image
+			
+		var devMap = document.getElementById("dev-map");
+
+		var nodes = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W'];
+
+		
+		var code = "";
+		var counter = 0;
+
+		var currentSelections = [];//currently checked input boxes
+		
+		alert("Enter nodes for "+nodes[0]);
+
+		function selection(e){
+			if(e.target.checked) currentSelections[currentSelections.length] = e.target.name;
+			else{
+				for(i=0;i<currentSelections.length;i++){
+					if(currentSelections[i] == e.target.name){
+						currentSelections.splice(i,i+1);
+					}
+				}
+			}
+		}
+
+		function nodeSelectionComplete(e){
+			if(e.keyCode == 13){
+				code += "<br>addEdge('"+nodes[counter]+"',['"+currentSelections.join("','")+"']);";
+				console.log(code);
+				document.getElementById("final").innerHTML = code;
+				currentSelections = [];
+				counter++;
+				alert("Enter nodes for "+nodes[counter]);
+
+				for(i=0;i<nodes.length;i++){
+					document.getElementsByTagName("input")[i].checked = false;
+				}
+			}
+		}	
+		document.addEventListener("keydown", nodeSelectionComplete);
+		//creating input tags
+		for(i=0;i<nodes.length;i++){
+			var inputElem = document.createElement("input");
+			inputElem.setAttribute("type", "checkbox");
+			inputElem.setAttribute("name", nodes[i]);
+			inputElem.addEventListener("click", selection);
+
+			var labelElem = document.createElement("label");
+			labelElem.setAttribute("name", nodes[i]);
+			labelElem.innerHTML = nodes[i];
+
+			document.body.appendChild(labelElem);
+			document.body.appendChild(inputElem);
+
+			var br = document.createElement("br");
+			document.body.appendChild(br);
+		}
+
+		//output given in format [edge, array of adjacents]
+	</script>
+</html>
